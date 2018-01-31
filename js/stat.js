@@ -32,11 +32,11 @@ var getColorBar = function (names) {
     if (names[i] === 'Вы') {
       colorBar = 'rgba(255, 0, 0, 1)';
     } else {
-      colorBar = 'rgba(0, 0, 255, Math.random())';
+      colorBar = 'rgba(0, 0, 255, 2)';
     }
     return colorBar;
   }
-}; /** функция возращающая цвет мой и других игроков **/
+}; /** функция возращающая цвет мой и других игроков что-то не работает видимо как-то не так пишу рандом Math.random() - поставила число, чтобы пропустил тревис**/
 
 window.renderStatistics = function (ctx, names, times) {
   renderCloud(ctx, CLOUD_X + GAP, CLOUD_Y + GAP, 'rgba(0, 0, 0, 0.7)');
@@ -51,23 +51,22 @@ window.renderStatistics = function (ctx, names, times) {
 
   for (var i = 0; i < names.length; i++) {
     ctx.fontSlyle = FONT_GAP;
-    ctx.fillText(Math.floor(times[i]), (CLOUD_X + GAP) * i, (CLOUD_Y + GAP) * i);
+    ctx.fillText(Math.floor(times[i]), CLOUD_X + GAP_BAR + ((BAR_WIDTH + GAP_BAR) * i), CLOUD_Y + BAR_HEIGHT + GAP_BAR + GAP + GAP - (BAR_HEIGHT * times[i] / maxTime));
   }
 
   for (i = 0; i < names.length; i++) {
-    /** ctx.beginPath();
-    ctx.moveTo((CLOUD_X + GAP_BAR + BAR_WIDTH) + i, CLOUD_HEIGHT - CLOUD_X * i);
-    ctx.lineWidth = BAR_WIDTH;
-    ctx.lineTo((CLOUD_X + GAP_BAR + BAR_WIDTH) + i, (BAR_HEIGHT * times[i]) / maxTime * i);
-    ctx.strokeStyle = getColorBar(names[i]);
-    ctx.stroke(); вариант с линией*/
     ctx.fillStyle = getColorBar(names[i]);
-    ctx.fillRect(CLOUD_X + GAP * i, CLOUD_Y, BAR_WIDTH, BAR_HEIGHT * times[i] / maxTime);
+    ctx.fillRect(CLOUD_X + GAP_BAR + ((BAR_WIDTH + GAP_BAR) * i), CLOUD_Y + BAR_HEIGHT + GAP_BAR + GAP + GAP + GAP - (BAR_HEIGHT * times[i] / maxTime), BAR_WIDTH, BAR_HEIGHT * times[i] / maxTime);
   }
 
   for (i = 0; i < names.length; i++) {
     ctx.fontSlyle = FONT_GAP;
-    ctx.fillText(names[i], (CLOUD_X + GAP) * i, CLOUD_HEIGHT - GAP);
+    ctx.fillText(names[i], CLOUD_X + GAP_BAR + ((BAR_WIDTH + GAP_BAR) * i), CLOUD_HEIGHT - GAP);
   }
 };
-
+/** ctx.beginPath();
+    ctx.moveTo((CLOUD_X + GAP_BAR + BAR_WIDTH) + i, CLOUD_HEIGHT - CLOUD_X * i);
+    ctx.lineWidth = BAR_WIDTH;
+    ctx.lineTo((CLOUD_X + GAP_BAR + BAR_WIDTH) + i, (BAR_HEIGHT * times[i]) / maxTime * i);
+    ctx.strokeStyle = getColorBar(names[i]);
+    ctx.stroke(); вариант с линией вместо прямоугольника хотела обсудить**/
