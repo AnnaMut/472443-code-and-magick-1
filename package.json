@@ -16,9 +16,7 @@
     "eslint": "4.2.0",
     "eslint-config-htmlacademy": "0.3.x"
   },
-  "dependencies": {
-    "grunt-cli": "^1.2.0"
-  },
+  "dependencies": {},
   "scripts": {
     "test": "eslint js/"
   },
